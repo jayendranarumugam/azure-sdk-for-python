@@ -115,6 +115,8 @@ class ComputeInstance(Compute):
     :type location: Optional[str]
     :param description: Description of the resource.
     :type description: Optional[str]
+    :type disable_local_auth: Optional[bool]. Defaults to False.
+    :param disable_local_auth: Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication
     :param size: Compute size.
     :type size: Optional[str]
     :param tags: A set of tags. Contains resource tags defined as key/value pairs.
@@ -189,6 +191,7 @@ class ComputeInstance(Compute):
         description: Optional[str] = None,
         size: Optional[str] = None,
         tags: Optional[dict] = None,
+        disable_local_auth: bool = False,
         ssh_public_access_enabled: Optional[bool] = None,
         create_on_behalf_of: Optional[AssignedUserConfiguration] = None,
         network_settings: Optional[NetworkSettings] = None,
@@ -217,6 +220,7 @@ class ComputeInstance(Compute):
             resource_id=kwargs.pop("resource_id", None),
             description=description,
             tags=tags,
+            disable_local_auth=disable_local_auth,
             **kwargs,
         )
         self.size = size
@@ -334,6 +338,7 @@ class ComputeInstance(Compute):
         return ComputeResource(
             location=self.location,
             properties=compute_instance,
+            disable_local_auth=self.disable_local_auth,
             identity=(self.identity._to_compute_rest_object() if self.identity else None),
             tags=self.tags,
         )

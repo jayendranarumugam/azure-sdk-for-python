@@ -431,6 +431,7 @@ class ComputeInstance(Compute):
             id=rest_obj.id,
             description=prop.description,
             location=rest_obj.location,
+            disable_local_auth=rest_obj.disable_local_auth,
             resource_id=prop.resource_id,
             tags=rest_obj.tags if rest_obj.tags else None,
             provisioning_state=prop.provisioning_state,
